@@ -42,7 +42,7 @@ const Chat = ({ messages }) => {
             message: input,
             name: "Demo App",
             timestamp: moment().format("HH:mm:ss"),
-            received: true
+            received: false
         });
         } catch (error) {
             console.log(error)

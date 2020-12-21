@@ -13,17 +13,17 @@ const pusher = new Pusher({
 const db = mongoose.connection
 
 db.once('open', () => {
-    console.log("Db connected")
+    // console.log("Db connected")
     
         const msgCollection =  db.collection("messages");
         
         const changeStream =  msgCollection.watch();
 
         changeStream.on("change", change => {
-            console.log("change")
+            
             if (change.operationType === "insert") {
                 const messageDetail = change.fullDocument;
-                console.log("dfgfjdf")
+                
                 pusher.trigger("messages", "inserted",
                     {
                         _id: messageDetail._id,
