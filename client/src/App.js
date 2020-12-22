@@ -15,9 +15,9 @@ function App() {
       setMessages(response.data)
     }).catch(err=>console.log(err))
   },[])
-
+    // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
   useEffect(() => {
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+    const pusher = new Pusher("0535ff3017ba7f86c21d", {
       cluster: 'eu'
     });
 

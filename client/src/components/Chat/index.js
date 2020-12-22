@@ -41,7 +41,7 @@ const Chat = ({ messages }) => {
             await axios.post("/messages/new", {
             message: input,
             name: "Demo App",
-            timestamp: moment().format("HH:mm:ss"),
+            timestamp: moment(),
             received: false
         });
         } catch (error) {
@@ -85,7 +85,7 @@ const Chat = ({ messages }) => {
                             </ChatBodyMessageOwner>
                             {message.message}
                             <ChatBodyMessageTime>
-                                {message.timestamp}
+                                {moment(message.timestamp).format("HH:mm:ss")}
                             </ChatBodyMessageTime>
                         </ChatBodyMessage>
                     ) : (
@@ -95,7 +95,7 @@ const Chat = ({ messages }) => {
                                 </ChatBodyMessageOwner>
                                 {message.message}
                                 <ChatBodyMessageTime>
-                                    {message.timestamp}
+                                    {moment(message.timestamp).format("HH:mm:ss")}
                                 </ChatBodyMessageTime>
                             </ChatBodyMessageReciever>
                         )
