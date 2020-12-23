@@ -55,17 +55,10 @@ width: fit-content;
 border-radius: 10px;
 background-color: #fff;
 margin-bottom: 30px;
-`;
-
-export const ChatBodyMessageReciever = styled.p`
-position: relative;
-font-size: 16px;
-padding: 8px;
-width: fit-content;
-border-radius: 10px;
-margin-left: auto;
-margin-bottom: 30px;
+&.received{
+    margin-left: auto;
 background-color: #dcf8c6;
+}
 `;
 
 export const ChatBodyMessageOwner = styled.span`

@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Avatar, IconButton } from '@material-ui/core';
 import { AttachFile, SearchOutlined, MoreVert, InsertEmoticon } from '@material-ui/icons';
 import MicIcon from '@material-ui/icons/Mic';
@@ -29,10 +29,10 @@ const Chat = ({ messages }) => {
 
     const [seed, setSeed] = useState("");
 
-    useEffect(()=> {
-        setSeed(Math.floor(Math.random()*5000))
-    },[]);
-    
+    useEffect(() => {
+        setSeed(Math.floor(Math.random() * 5000))
+    }, []);
+
     const [input, setInput] = useState("");
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
@@ -45,22 +45,22 @@ const Chat = ({ messages }) => {
         e.preventDefault();
         try {
             await axios.post("/messages/new", {
-            message: input,
-            name: "Demo App",
-            timestamp: moment(),
-            received: false
-        });
+                message: input,
+                name: "Demo App",
+                timestamp: moment(),
+                received: true
+            });
         } catch (error) {
             console.log(error)
         }
-        
+
 
         setInput("");
     }
     return (
         <ChatWrapper>
             <ChatHeader>
-                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
 
                 <ChatHeaderInfo>
                     <ChatHeaderInfoRoom>Room Name</ChatHeaderInfoRoom>
@@ -82,29 +82,17 @@ const Chat = ({ messages }) => {
             </ChatHeader>
 
             <ChatBody>
-
                 {messages.map((message) => (
-                    message.received ? (
-                        <ChatBodyMessage key={message._id}>
-                            <ChatBodyMessageOwner>
-                                {message.name}
-                            </ChatBodyMessageOwner>
-                            {message.message}
-                            <ChatBodyMessageTime>
-                                {moment(message.timestamp).format("HH:mm:ss")}
-                            </ChatBodyMessageTime>
-                        </ChatBodyMessage>
-                    ) : (
-                            <ChatBodyMessageReciever key={message._id}>
-                                <ChatBodyMessageOwner>
-                                    {message.name}
-                                </ChatBodyMessageOwner>
-                                {message.message}
-                                <ChatBodyMessageTime>
-                                    {moment(message.timestamp).format("HH:mm:ss")}
-                                </ChatBodyMessageTime>
-                            </ChatBodyMessageReciever>
-                        )
+
+                    <ChatBodyMessage className={!message.received ? "received" : null} key={message._id}>
+                        <ChatBodyMessageOwner>
+                            {message.name}
+                        </ChatBodyMessageOwner>
+                        {message.message}
+                        <ChatBodyMessageTime>
+                            {moment(message.timestamp).format("HH:mm:ss")}
+                        </ChatBodyMessageTime>
+                    </ChatBodyMessage>
 
                 ))}
                 <StyledScrollDiv ref={messagesEndRef} />
