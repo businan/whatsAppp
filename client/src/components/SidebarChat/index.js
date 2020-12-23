@@ -2,12 +2,13 @@ import { Avatar } from '@material-ui/core';
 import React from 'react';
 import { SidebarChatWrapper, SidebarChatInfo, SidebarChatRoomName, SidebarChatLastMessage } from './SidebarChat.style';
 
-const SidebarChat = () => {
+const SidebarChat = ({ roomName }) => {
+    
     return (
-        <SidebarChatWrapper>
+        <SidebarChatWrapper >
             <Avatar />
             <SidebarChatInfo>
-                <SidebarChatRoomName> Room Name</SidebarChatRoomName>
+                <SidebarChatRoomName> {roomName}</SidebarChatRoomName>
                 <SidebarChatLastMessage>This is the last message</SidebarChatLastMessage>
             </SidebarChatInfo>
 

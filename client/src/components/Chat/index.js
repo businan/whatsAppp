@@ -25,7 +25,7 @@ import axios from "../../helper/Axios";
 import moment from 'moment';
 
 const Chat = ({ messages }) => {
-    console.log(messages);
+    // console.log(messages);
     
     const [input, setInput] = useState("");
     const messagesEndRef = useRef(null);

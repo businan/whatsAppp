@@ -9,13 +9,20 @@ import axios from "./helper/Axios";
 function App() {
 
   const [messages, setMessages] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
+    axios.get("/rooms/sync").then(response => {
+      setRooms(response.data)
+    }).catch(err => console.log("Error while getting rooms", err))
+  }, [])
+
+  useEffect(() => {
     axios.get("/messages/sync").then(response => {
       setMessages(response.data)
-    }).catch(err=>console.log(err))
-  },[])
-    // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
+    }).catch(err => console.log("Error while getting messagess", err))
+  }, [])
+  // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
   useEffect(() => {
     const pusher = new Pusher("0535ff3017ba7f86c21d", {
       cluster: 'eu'
@@ -34,13 +41,14 @@ function App() {
   }, [messages])
 
   // console.log(messages);
+  // console.log(rooms)
   return (
     <Fragment>
       <GlobalStyle />
 
       <Wrapper>
-        <Sidebar />
-        <Chat messages={messages}/>
+        <Sidebar rooms={rooms}/>
+        <Chat messages={messages} />
       </Wrapper>
 
     </Fragment>
