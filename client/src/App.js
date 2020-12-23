@@ -27,7 +27,6 @@ function App() {
     const pusher = new Pusher("0535ff3017ba7f86c21d", {
       cluster: 'eu'
     });
-
     const channel = pusher.subscribe('messages');
     channel.bind('inserted', (newMessage) => {
       // alert(JSON.stringify(newMessage));
@@ -38,7 +37,23 @@ function App() {
       channel.unbind_all();
       channel.unsubscribe();
     }
-  }, [messages])
+  }, [messages]);
+  // TODO before deploy change like that process.env.REACT_APP_PUSHER_ROOM_KEY
+  useEffect(() => {
+    const pusher = new Pusher("6be09bff2ab535064f85", {
+      cluster: "mt1",
+    });
+    const channel = pusher.subscribe('rooms');
+    channel.bind('inserted', (newRoom) => {
+      // alert(JSON.stringify(newMessage));
+      setRooms([...rooms, newRoom])
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    }
+  }, [rooms])
 
   // console.log(messages);
   // console.log(rooms)

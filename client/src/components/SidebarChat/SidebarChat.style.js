@@ -20,6 +20,11 @@ font-size: 16px;
 margin-bottom: 4px;
 `;
 
+export const SidebarChatAddRoomName = styled.h2`
+font-size: 20px;
+margin: 0 auto 4px auto;
+`;
+
 export const SidebarChatLastMessage = styled.p`
 font-size: 12px;
 `;

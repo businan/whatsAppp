@@ -13,7 +13,7 @@ const pusher = new Pusher({
 const db = mongoose.connection
 
 db.once('open', () => {
-    // console.log("Db connected")
+    // console.log("Db connected in message pusher")
     
         const msgCollection =  db.collection("messages");
         
@@ -41,5 +41,6 @@ db.once('open', () => {
         })
 
 });
+
 
 module.exports = pusher;

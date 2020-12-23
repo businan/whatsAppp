@@ -14,7 +14,7 @@ import { SearchOutlined } from '@material-ui/icons';
 import { IconButton, Avatar } from '@material-ui/core';
 import SidebarChat from '../SidebarChat';
 
-const Sidebar = ({ rooms }) => {
+const Sidebar = ({ rooms, addNewChat }) => {
     // console.log(rooms)
     return (
         <SidebarWrapper >
@@ -44,9 +44,10 @@ const Sidebar = ({ rooms }) => {
             </SidebarSearch>
 
             <SidebarChats>
+                <SidebarChat addNewChat />
                 {
                     rooms.map((room, index) => (
-                        <SidebarChat roomName={room.roomName} key={index} />
+                        <SidebarChat roomName={room.roomName} key={index} id={room._id} />
                     ))
                 }
                 

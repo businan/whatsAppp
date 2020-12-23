@@ -26,6 +26,12 @@ import moment from 'moment';
 
 const Chat = ({ messages }) => {
     // console.log(messages);
+
+    const [seed, setSeed] = useState("");
+
+    useEffect(()=> {
+        setSeed(Math.floor(Math.random()*5000))
+    },[]);
     
     const [input, setInput] = useState("");
     const messagesEndRef = useRef(null);
@@ -54,7 +60,7 @@ const Chat = ({ messages }) => {
     return (
         <ChatWrapper>
             <ChatHeader>
-                <Avatar />
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
 
                 <ChatHeaderInfo>
                     <ChatHeaderInfoRoom>Room Name</ChatHeaderInfoRoom>

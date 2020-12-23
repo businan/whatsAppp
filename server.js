@@ -9,6 +9,7 @@ const cors = require("cors");
 const connectDB = require("./models/dbConnect");
 const router = require('./routes/router');
 const pusher = require("./helpers/Pusher");
+const roomPusher = require("./helpers/PusherRoom");
 
 connectDB();
 
