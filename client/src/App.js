@@ -7,21 +7,33 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Login from "./components/Login";
+import { useStateValue } from "./context/StateProvider";
+
 
 function App() {
+
+  const [{ user }, dispatch] = useStateValue();
+
   return (
     <>
-      <GlobalStyle />
-      <Wrapper>
-        <Router>
-          <Sidebar />
-          <Switch>
-            <Route path="/rooms/:roomId" >
-              <Chat />
-            </Route>
-          </Switch>
-        </Router>
-      </Wrapper>
+        <GlobalStyle />
+        {
+          !user ? (
+            <Login />
+          ) : (
+              <Wrapper>
+                <Router>
+                  <Sidebar />
+                  <Switch>
+                    <Route path="/rooms/:roomId" >
+                      <Chat />
+                    </Route>
+                  </Switch>
+                </Router>
+              </Wrapper>
+            )
+        }
     </>
   );
 }
