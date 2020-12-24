@@ -5,7 +5,8 @@ import {
     SidebarChatInfo,
     SidebarChatRoomName,
     SidebarChatLastMessage,
-    SidebarChatAddRoomName
+    SidebarChatAddRoomName,
+    StyledLink
 } from './SidebarChat.style';
 import axios from "../../helper/Axios";
 import { Link } from 'react-router-dom';
@@ -43,7 +44,7 @@ const SidebarChat = ({ roomName, addNewChat, id }) => {
     }
     console.log("from sidebar",messages)
     return !addNewChat ? (
-        <Link to={`/rooms/${id}`}>
+        <StyledLink to={`/rooms/${id}`}>
             <SidebarChatWrapper >
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
                 <SidebarChatInfo>
@@ -52,7 +53,7 @@ const SidebarChat = ({ roomName, addNewChat, id }) => {
                 </SidebarChatInfo>
 
             </SidebarChatWrapper>
-        </Link>
+        </StyledLink>
 
     ) : (
             <SidebarChatWrapper onClick={createChat}>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
 export const SidebarChatWrapper = styled.div`
 display: flex;
@@ -27,4 +28,9 @@ margin: 0 auto 4px auto;
 
 export const SidebarChatLastMessage = styled.p`
 font-size: 12px;
+`;
+
+export const StyledLink = styled(Link)`
+text-decoration: none !important;
+      color: black;
 `;
