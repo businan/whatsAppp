@@ -59,11 +59,10 @@ const Chat = () => {
 
     
 
-    console.log("inside chat component",roomId)
     useEffect(() => {
         if (roomId) {
             axios.get(`/rooms/${roomId}`).then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setRoomName(response.data.roomName)
             }).catch(err => console.log("Error while getting rooms", err))
         }
@@ -98,6 +97,8 @@ const Chat = () => {
 
         setInput("");
     }
+
+    // console.log(messages)
     return (
         <ChatWrapper>
             <ChatHeader>
@@ -105,7 +106,7 @@ const Chat = () => {
 
                 <ChatHeaderInfo>
                     <ChatHeaderInfoRoom>{roomName}</ChatHeaderInfoRoom>
-                    <ChatHeaderInfoLastSeen>Last seen at...</ChatHeaderInfoLastSeen>
+                    <ChatHeaderInfoLastSeen>{messages[messages.length-1]?.timestamp}</ChatHeaderInfoLastSeen>
                 </ChatHeaderInfo>
 
                 <ChatHeaderRight>

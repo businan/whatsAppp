@@ -13,6 +13,14 @@ import { Link } from 'react-router-dom';
 const SidebarChat = ({ roomName, addNewChat, id }) => {
 
     const [seed, setSeed] = useState("");
+    const [messages, setMessages] = useState([]);
+    // console.log("sidebar room id",id)
+
+    useEffect(() => {
+        axios.get(`/messages/sync/${id}`).then(response => {
+          setMessages(response.data)
+        }).catch(err => console.log("Error while getting messagess", err))
+      }, [id, messages])
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000))
@@ -33,14 +41,14 @@ const SidebarChat = ({ roomName, addNewChat, id }) => {
             }
         }
     }
-    
+    console.log("from sidebar",messages)
     return !addNewChat ? (
         <Link to={`/rooms/${id}`}>
             <SidebarChatWrapper >
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
                 <SidebarChatInfo>
                     <SidebarChatRoomName> {roomName}</SidebarChatRoomName>
-                    <SidebarChatLastMessage>This is the last message</SidebarChatLastMessage>
+                    <SidebarChatLastMessage>{messages[messages.length-1]?.message}</SidebarChatLastMessage>
                 </SidebarChatInfo>
 
             </SidebarChatWrapper>
