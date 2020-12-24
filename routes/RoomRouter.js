@@ -6,4 +6,6 @@ router.get("/sync", RoomController.getRooms);
 
 router.post("/new", RoomController.addRoom);
 
+router.get('/:id', RoomController.getRoom);
+
 module.exports = router;

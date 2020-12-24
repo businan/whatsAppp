@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import { Avatar, IconButton } from '@material-ui/core';
 import { AttachFile, SearchOutlined, MoreVert, InsertEmoticon } from '@material-ui/icons';
 import MicIcon from '@material-ui/icons/Mic';
@@ -14,7 +15,6 @@ import {
     ChatBodyMessage,
     ChatBodyMessageOwner,
     ChatBodyMessageTime,
-    ChatBodyMessageReciever,
     ChatFooter,
     StyledForm,
     StyledInput,
@@ -28,13 +28,27 @@ const Chat = ({ messages }) => {
     // console.log(messages);
 
     const [seed, setSeed] = useState("");
+    const [input, setInput] = useState("");
+    const { roomId } = useParams();
+    const [roomName, setRoomName] = useState("");
+
+    const messagesEndRef = useRef(null);
+
+    console.log("inside chat component",roomId)
+    useEffect(() => {
+        if (roomId) {
+            axios.get(`/rooms/${roomId}`).then(response => {
+                console.log(response.data)
+                setRoomName(response.data.roomName)
+            }).catch(err => console.log("Error while getting rooms", err))
+        }
+
+    }, [roomId])
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000))
     }, []);
 
-    const [input, setInput] = useState("");
-    const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     };
@@ -43,8 +57,10 @@ const Chat = ({ messages }) => {
 
     const sendMessage = async (e) => {
         e.preventDefault();
+        console.log(roomId)
         try {
             await axios.post("/messages/new", {
+                room_Id: roomId,
                 message: input,
                 name: "Demo App",
                 timestamp: moment(),
@@ -63,7 +79,7 @@ const Chat = ({ messages }) => {
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
 
                 <ChatHeaderInfo>
-                    <ChatHeaderInfoRoom>Room Name</ChatHeaderInfoRoom>
+                    <ChatHeaderInfoRoom>{roomName}</ChatHeaderInfoRoom>
                     <ChatHeaderInfoLastSeen>Last seen at...</ChatHeaderInfoLastSeen>
                 </ChatHeaderInfo>
 

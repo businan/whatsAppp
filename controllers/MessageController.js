@@ -11,9 +11,10 @@ exports.getMessages = async (req, res) => {
 
 exports.addMessage = async (req, res) => {
     try {
-        const { message, name, timestamp, received } = req.body;
+        const { room_Id, message, name, timestamp, received } = req.body;
 
         const newMassage = new Messages({
+            room_Id,
             message,
             name,
             timestamp,

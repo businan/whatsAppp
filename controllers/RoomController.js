@@ -9,6 +9,18 @@ exports.getRooms = async (req, res) => {
     }
 };
 
+exports.getRoom = async (req, res) => {
+    try {
+        const room = await Rooms.findById({ _id: req.params.id });
+        res.status(200).json(room);
+
+    }
+    catch (error) {
+        return res.status(500).json({ errors: [{ message: error.message }] });
+    }
+
+}
+
 exports.addRoom = async (req, res) => {
     try {
         const { roomName } = req.body;

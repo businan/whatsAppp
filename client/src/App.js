@@ -5,6 +5,11 @@ import { Wrapper } from "./components/Wrapper";
 import GlobalStyle from "./theme/globalStyles";
 import Pusher from "pusher-js";
 import axios from "./helper/Axios";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 function App() {
 
@@ -62,8 +67,24 @@ function App() {
       <GlobalStyle />
 
       <Wrapper>
-        <Sidebar rooms={rooms}/>
-        <Chat messages={messages} />
+
+        <Router>
+
+
+          <Sidebar rooms={rooms} />
+          <Switch>
+            <Route path="/rooms/:roomId" >
+              <Chat messages={messages} />
+            </Route>
+            <Route path="/" >
+              <Chat messages={messages} />
+            </Route>
+
+
+          </Switch>
+
+        </Router>
+
       </Wrapper>
 
     </Fragment>

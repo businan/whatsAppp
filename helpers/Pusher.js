@@ -27,6 +27,7 @@ db.once('open', () => {
                 pusher.trigger("messages", "inserted",
                     {
                         _id: messageDetail._id,
+                        room_id: messageDetail.room_id,
                         message: messageDetail.message,
                         name: messageDetail.name,
                         timestamp: messageDetail.timestamp,

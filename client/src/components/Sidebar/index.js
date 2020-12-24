@@ -1,11 +1,12 @@
 import React from 'react'
-import { SidebarWrapper, 
-    SidebarHeader, 
-    SidebarHeaderRight, 
-    SidebarSearch, 
-    SidebarSearchContainer, 
-    SidebarChats, 
-    StyledInput 
+import {
+    SidebarWrapper,
+    SidebarHeader,
+    SidebarHeaderRight,
+    SidebarSearch,
+    SidebarSearchContainer,
+    SidebarChats,
+    StyledInput
 } from './Sidebar.style';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -14,8 +15,8 @@ import { SearchOutlined } from '@material-ui/icons';
 import { IconButton, Avatar } from '@material-ui/core';
 import SidebarChat from '../SidebarChat';
 
-const Sidebar = ({ rooms, addNewChat }) => {
-    // console.log(rooms)
+const Sidebar = ({ rooms }) => {
+    console.log(rooms)
     return (
         <SidebarWrapper >
             <SidebarHeader>
@@ -37,20 +38,21 @@ const Sidebar = ({ rooms, addNewChat }) => {
             <SidebarSearch>
                 <SidebarSearchContainer>
                     <SearchOutlined />
-                    
+
                     <StyledInput placeholder="Search or start new chat" type="text" />
-                    
+
                 </SidebarSearchContainer>
             </SidebarSearch>
 
             <SidebarChats>
                 <SidebarChat addNewChat />
                 {
-                    rooms.map((room, index) => (
-                        <SidebarChat roomName={room.roomName} key={index} id={room._id} />
+                    rooms.map((room) => (
+                        
+                        <SidebarChat roomName={room.roomName} key={room._id} id={room._id} />
                     ))
                 }
-                
+
             </SidebarChats>
 
         </SidebarWrapper>
