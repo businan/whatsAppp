@@ -23,16 +23,41 @@ import {
 } from './Chat.style';
 import axios from "../../helper/Axios";
 import moment from 'moment';
+import Pusher from "pusher-js";
 
-const Chat = ({ messages }) => {
+const Chat = () => {
     // console.log(messages);
-
+    const [messages, setMessages] = useState([]);
     const [seed, setSeed] = useState("");
     const [input, setInput] = useState("");
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
 
     const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        axios.get(`/messages/sync/${roomId}`).then(response => {
+          setMessages(response.data)
+        }).catch(err => console.log("Error while getting messagess", err))
+      }, [roomId])
+      // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
+      useEffect(() => {
+        const pusher = new Pusher("0535ff3017ba7f86c21d", {
+          cluster: 'eu'
+        });
+        const channel = pusher.subscribe('messages');
+        channel.bind('inserted', (newMessage) => {
+          // alert(JSON.stringify(newMessage));
+          setMessages([...messages, newMessage])
+        });
+    
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        }
+      }, [messages]);
+
+    
 
     console.log("inside chat component",roomId)
     useEffect(() => {

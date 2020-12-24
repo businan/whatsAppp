@@ -13,7 +13,7 @@ import {
 
 function App() {
 
-  const [messages, setMessages] = useState([]);
+  
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
@@ -22,27 +22,7 @@ function App() {
     }).catch(err => console.log("Error while getting rooms", err))
   }, [])
 
-  useEffect(() => {
-    axios.get("/messages/sync").then(response => {
-      setMessages(response.data)
-    }).catch(err => console.log("Error while getting messagess", err))
-  }, [])
-  // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
-  useEffect(() => {
-    const pusher = new Pusher("0535ff3017ba7f86c21d", {
-      cluster: 'eu'
-    });
-    const channel = pusher.subscribe('messages');
-    channel.bind('inserted', (newMessage) => {
-      // alert(JSON.stringify(newMessage));
-      setMessages([...messages, newMessage])
-    });
-
-    return () => {
-      channel.unbind_all();
-      channel.unsubscribe();
-    }
-  }, [messages]);
+  
   // TODO before deploy change like that process.env.REACT_APP_PUSHER_ROOM_KEY
   useEffect(() => {
     const pusher = new Pusher("6be09bff2ab535064f85", {
@@ -74,11 +54,11 @@ function App() {
           <Sidebar rooms={rooms} />
           <Switch>
             <Route path="/rooms/:roomId" >
-              <Chat messages={messages} />
+              <Chat />
             </Route>
-            <Route path="/" >
+            {/* <Route path="/" >
               <Chat messages={messages} />
-            </Route>
+            </Route> */}
 
 
           </Switch>
