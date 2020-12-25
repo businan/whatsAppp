@@ -32,7 +32,7 @@ const Sidebar = () => {
 
     // TODO before deploy change like that process.env.REACT_APP_PUSHER_ROOM_KEY
     useEffect(() => {
-        const pusher = new Pusher("6be09bff2ab535064f85", {
+        const pusher = new Pusher(process.env.REACT_APP_PUSHER_ROOM_KEY, {
             cluster: "mt1",
         });
         const channel = pusher.subscribe('rooms');

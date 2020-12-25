@@ -25,6 +25,7 @@ import axios from "../../helper/Axios";
 import moment from 'moment';
 import Pusher from "pusher-js";
 import { useStateValue } from "../../context/StateProvider";
+import { actionTypes } from '../../context/reducer';
 
 
 
@@ -47,7 +48,7 @@ const Chat = () => {
       }, [roomId])
       // TODO before deploy change like that process.env.REACT_APP_PUSHER_KEY
       useEffect(() => {
-        const pusher = new Pusher("0535ff3017ba7f86c21d", {
+        const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
           cluster: 'eu'
         });
         const channel = pusher.subscribe('messages');
@@ -55,10 +56,9 @@ const Chat = () => {
           // alert(JSON.stringify(newMessage));
           setMessages([...messages, newMessage])
         });
-    
         return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
+            channel.unbind_all();
+            channel.unsubscribe();
         }
       }, [messages]);
 
@@ -89,12 +89,18 @@ const Chat = () => {
         // console.log(roomId)
         
         try {
+            dispatch({
+                type: actionTypes.SET_LASTMESSAGE,
+                lastMessage: {
+                    room_Id: roomId,
+                    message: input
+                }
+            })
             await axios.post("/messages/new", {
                 room_Id: roomId,
                 message: input,
                 name: user.displayName,
-                timestamp: moment(),
-                received: true
+                timestamp: moment()
             });
         } catch (error) {
             console.log(error)

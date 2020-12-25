@@ -11,14 +11,13 @@ exports.getMessages = async (req, res) => {
 
 exports.addMessage = async (req, res) => {
     try {
-        const { room_Id, message, name, timestamp, received } = req.body;
+        const { room_Id, message, name, timestamp } = req.body;
 
         const newMassage = new Messages({
             room_Id,
             message,
             name,
-            timestamp,
-            received
+            timestamp
         });
 
         const addedMessage = await newMassage.save({ new: true });

@@ -9,13 +9,15 @@ import {
     StyledLink
 } from './SidebarChat.style';
 import axios from "../../helper/Axios";
+import { useStateValue } from '../../context/StateProvider';
 
 
 const SidebarChat = ({ roomName, addNewChat, id }) => {
     console.log(id)
     const [seed, setSeed] = useState("");
     const [messages, setMessages] = useState([]);
-   
+    const [{lastMessage}, dispatch] = useStateValue();
+    console.log(lastMessage)
     useEffect(() => {
         const getMessages = () => {
             axios.get(`/messages/sync/${id}`).then(response => {

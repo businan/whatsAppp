@@ -13,9 +13,6 @@ const MessageSchema = new Schema({
     },
     timestamp: {
         type: String,
-    },
-    received: {
-        type: Boolean,
     }
 })
 
