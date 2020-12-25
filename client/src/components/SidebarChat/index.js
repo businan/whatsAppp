@@ -9,19 +9,25 @@ import {
     StyledLink
 } from './SidebarChat.style';
 import axios from "../../helper/Axios";
-import { Link } from 'react-router-dom';
+
 
 const SidebarChat = ({ roomName, addNewChat, id }) => {
-
+    console.log(id)
     const [seed, setSeed] = useState("");
     const [messages, setMessages] = useState([]);
-    // console.log("sidebar room id",id)
-
+   
     useEffect(() => {
-        axios.get(`/messages/sync/${id}`).then(response => {
-          setMessages(response.data)
-        }).catch(err => console.log("Error while getting messagess", err))
-      }, [id, messages])
+        const getMessages = () => {
+            axios.get(`/messages/sync/${id}`).then(response => {
+                setMessages(response.data)
+               
+              }).catch(err => console.log("Error while getting messagess", err))
+        }
+              
+        getMessages();
+
+      }, [id])
+     
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000))
@@ -42,7 +48,7 @@ const SidebarChat = ({ roomName, addNewChat, id }) => {
             }
         }
     }
-    console.log("from sidebar",messages)
+    // console.log("from sidebar",messages)
     return !addNewChat ? (
         <StyledLink to={`/rooms/${id}`}>
             <SidebarChatWrapper >

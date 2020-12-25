@@ -16,10 +16,12 @@ import { IconButton, Avatar } from '@material-ui/core';
 import SidebarChat from '../SidebarChat';
 import Pusher from "pusher-js";
 import axios from "../../helper/Axios";
+import { useStateValue } from "../../context/StateProvider";
 
 const Sidebar = () => {
     
     const [rooms, setRooms] = useState([]);
+    const [{user}, dispatch] = useStateValue();
 
     useEffect(() => {
         axios.get("/rooms/sync").then(response => {
@@ -44,11 +46,11 @@ const Sidebar = () => {
             channel.unsubscribe();
         }
     }, [rooms])
-    console.log(rooms)
+    // console.log(rooms)
     return (
         <SidebarWrapper >
             <SidebarHeader>
-                <Avatar src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png" />
+                <Avatar src={user?.photoURL} />
 
                 <SidebarHeaderRight>
                     <IconButton>

@@ -24,6 +24,9 @@ import {
 import axios from "../../helper/Axios";
 import moment from 'moment';
 import Pusher from "pusher-js";
+import { useStateValue } from "../../context/StateProvider";
+
+
 
 const Chat = () => {
     // console.log(messages);
@@ -32,6 +35,8 @@ const Chat = () => {
     const [input, setInput] = useState("");
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
+    const [{user}, dispatch] = useStateValue();
+    
 
     const messagesEndRef = useRef(null);
 
@@ -58,7 +63,7 @@ const Chat = () => {
       }, [messages]);
 
     
-
+      // console.log(messages)
     useEffect(() => {
         if (roomId) {
             axios.get(`/rooms/${roomId}`).then(response => {
@@ -81,12 +86,13 @@ const Chat = () => {
 
     const sendMessage = async (e) => {
         e.preventDefault();
-        console.log(roomId)
+        // console.log(roomId)
+        
         try {
             await axios.post("/messages/new", {
                 room_Id: roomId,
                 message: input,
-                name: "Demo App",
+                name: user.displayName,
                 timestamp: moment(),
                 received: true
             });
@@ -97,8 +103,7 @@ const Chat = () => {
 
         setInput("");
     }
-
-    // console.log(messages)
+ 
     return (
         <ChatWrapper>
             <ChatHeader>
@@ -126,9 +131,9 @@ const Chat = () => {
             <ChatBody>
                 {messages.map((message) => (
 
-                    <ChatBodyMessage className={!message.received ? "received" : null} key={message._id}>
+                    <ChatBodyMessage className={user.displayName===message.name ? "received" : null} key={message._id}>
                         <ChatBodyMessageOwner>
-                            {message.name}
+                            {message.name.match(/\b(\w)/g).join('')}
                         </ChatBodyMessageOwner>
                         {message.message}
                         <ChatBodyMessageTime>

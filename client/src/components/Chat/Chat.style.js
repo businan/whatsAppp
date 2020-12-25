@@ -66,6 +66,7 @@ position: absolute;
 top: -15px;
 font-weight: 800;
 font-size: 10px;
+display: block;
 `;
 
 export const ChatBodyMessageTime = styled.span`
